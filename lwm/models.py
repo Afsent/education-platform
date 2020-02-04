@@ -20,6 +20,8 @@ class Lessons(models.Model):
     class Meta:
         managed = False
         db_table = 'lessons'
+        verbose_name = 'Урок'
+        verbose_name_plural = 'Уроки'
 
 
 class SubjectGroups(models.Model):
@@ -35,6 +37,8 @@ class SubjectGroups(models.Model):
     class Meta:
         managed = False
         db_table = 'subject_groups'
+        verbose_name = 'Направление'
+        verbose_name_plural = 'Направления'
 
 
 class Subjects(models.Model):
@@ -52,6 +56,8 @@ class Subjects(models.Model):
     class Meta:
         managed = False
         db_table = 'subjects'
+        verbose_name = 'Предмет'
+        verbose_name_plural = 'Предметы'
 
 
 class Teachers(models.Model):
@@ -69,3 +75,5 @@ class Teachers(models.Model):
     class Meta:
         managed = False
         db_table = 'teachers'
+        verbose_name = 'Преподаватель'
+        verbose_name_plural = 'Преподаватели'
