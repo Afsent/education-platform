@@ -2,5 +2,7 @@
 
 {% block content %}
     <h1>Добро пожаловать</h1>
-    {{ lessons }}
+    {% for lesson in lessons %}
+        <li>{{ lesson }}</li>
+    {% endfor %}
 {% endblock %}

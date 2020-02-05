@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Lessons
 
 
-def index(request):
+def main(request):
     lessons = Lessons.objects.all()
     return render(request,
-                  'index.html', context={'lessons': lessons})
+                  'main.html', context={'lessons': lessons})
