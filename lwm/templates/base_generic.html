@@ -16,14 +16,32 @@
 <body>
 {% block sidebar %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href=
-                        "{% url 'main' %}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="">All
-                    lessons</a></li>
-                <li class="nav-item"><a class="nav-link" href="">All
-                    subjects</a></li>
+        <div class="container">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href=
+                            "{% url 'main' %}">Главная</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            href="">Все занятия</a></li>
+                    <li class="nav-item"><a class="nav-link"
+                                            href="">Все предметы</a></li>
+                </ul>
+            </div>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if user.is_authenticated %}
+                    <li class="navbar-text" style='color: #19865C'>Привет,
+                        {{ user.get_username }} </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}?next
+                        ={{ request.path }}">Выход</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}?next
+                        ={{ request.path }}">Войти</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </nav>
