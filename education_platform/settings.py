@@ -35,7 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'lwm.apps.LwmConfig',
+    'main.apps.MainConfig',
     'bootstrap4',
 ]
 
@@ -118,4 +118,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/lwm/'
+LOGIN_REDIRECT_URL = '/'

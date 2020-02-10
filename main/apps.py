@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class LwmConfig(AppConfig):
-    name = 'lwm'
+class MainConfig(AppConfig):
+    name = 'main'
     verbose_name = 'Платформа онлайн образования'

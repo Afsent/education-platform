@@ -20,7 +20,7 @@ from django.contrib.staticfiles.views import serve
 from django.views.decorators.cache import never_cache
 
 urlpatterns = [
-    path('lwm/', include('lwm.urls', namespace='')),
+    path('', include('main.urls', namespace='')),
     path('admin/', admin.site.urls),
 ]
 
