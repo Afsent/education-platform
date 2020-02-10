@@ -1,0 +1,74 @@
+{% load bootstrap4 %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type"
+          content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=l, shrink-to-fit=no">
+    <title>{% block title %}Главная{% endblock %} - Learn With Me </title>
+    {% bootstrap_css %}
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'main/style.css' %}">
+    {% bootstrap_javascript jquery='slim' %}
+</head>
+<body class="container-fluid">
+<div class="row">
+    <ul class="col nav justify-content-end border navbar-dark bg-dark">
+        <li class="nav-item">
+            <a class="nav-link"
+               href="#">Регистрация
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle"
+               data-toggle="dropdown" href="#"
+               role="button" aria-haspopup="true"
+               aria-expanded="false">Профиль
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Moи
+                    курсы
+                </a>
+                <a class="dropdown-item" href="#">Изменить личные
+                    данные
+                </a>
+                <a class="dropdown-item" href="#">Изменить
+                    пароль
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Выйти</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Удалить</a>
+            </div>
+        </li>
+        <li class="nav-item"><a class="nav-link"
+                                href="#">Bxoд</a></li>
+    </ul>
+</div>
+<div class="row">
+    <nav class="col-md-auto nav flex-column border">
+        <a class="nav-link root"
+           href="{% url 'main' %}">Главная
+        </a>
+        <span class=" nav-link root font-weight-bold">IT</span>
+        <a class="nav-link" href="#">Java</a>
+        <a class="nav-link" href="#">Python</a>
+        <a class="nav-link" href="#">C++</a>
+        <span class="nav-link root font-weight-bold" href="#">Математика</span>
+        <a class="nav-link" href="#">Линейная алгебра</a>
+        <a class="nav-link" href="#">Статистика</a>
+    </nav>
+    <section class="col border ру-2">
+        {% bootstrap_messages %}
+        {% block content %}
+
+        {% endblock %}
+    </section>
+</div>
+<footer class="mt-3">
+    <p class="text-right font-italic">&copy; Алексей Журавлев, 2020 г.</p>
+</footer>
+</body>
+</html>
