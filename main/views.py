@@ -1,23 +1,17 @@
+from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404
 from .models import Lessons, AdvUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .forms import ChangeUserInfoForm, RegisterUserForm
 from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
 from .utilities import signer
-from django.core.mail import EmailMessage
-
-
-def test_mail(request):
-    email = EmailMessage('title', 'body', to=['pro1004ek51@gmail.com'])
-    email.send()
-
-    return render(request, 'registration/activation_done.html')
+from django.contrib import messages
 
 
 def user_activate(request, sign):
@@ -77,6 +71,27 @@ class BBLoginView(LoginView):
 
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'registration/logout.html'
+
+
+class DeleteUserView(LoginRequiredMixin, DeleteView):
+    model = AdvUser
+    template_name = 'registration/delete_user.html'
+    success_url = reverse_lazy('main')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.user_id = request.user.pk
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        logout(request)
+        messages.add_message(request, messages.SUCCESS,
+                             'Пользователь удален')
+        return super().post(request, *args, **kwargs)
+
+    def get_object(self, queryset=None):
+        if not queryset:
+            queryset = self.get_queryset()
+        return get_object_or_404(queryset, pk=self.user_id)
 
 
 @login_required
