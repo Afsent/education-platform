@@ -1,6 +1,10 @@
 from django.contrib import admin
+from .models import Lessons, Teachers, SubjectGroups, Subjects, AdvUser
 
-from .models import Lessons, Teachers, SubjectGroups, Subjects
+
+@admin.register(AdvUser)
+class LessonsAdmin(admin.ModelAdmin):
+    list_display = ('username', 'first_name', 'email')
 
 
 @admin.register(Lessons)

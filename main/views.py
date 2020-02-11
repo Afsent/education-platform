@@ -1,13 +1,24 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Lessons
+from .models import Lessons, AdvUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, CreateView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
-from .forms import ChangeUserInfoForm
+from .forms import ChangeUserInfoForm, RegisterUserForm
+from django.views.generic.base import TemplateView
+
+
+class RegisterUserView(CreateView):
+    model = AdvUser
+    template_name = 'registration/register_user.html'
+    form_class = RegisterUserForm
+    success_url = reverse_lazy('register_done')
+
+
+class RegisterDoneView(TemplateView):
+    template_name = 'registration/register_done.html'
 
 
 class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
@@ -18,7 +29,7 @@ class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
 
 
 class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
-    model = User
+    model = AdvUser
     template_name = 'registration/change_user_info.html'
     form_class = ChangeUserInfoForm
     success_url = reverse_lazy('profile')
