@@ -10,6 +10,14 @@ from .forms import ChangeUserInfoForm, RegisterUserForm
 from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
 from .utilities import signer
+from django.core.mail import EmailMessage
+
+
+def test_mail(request):
+    email = EmailMessage('title', 'body', to=['pro1004ek51@gmail.com'])
+    email.send()
+
+    return render(request, 'registration/activation_done.html')
 
 
 def user_activate(request, sign):
