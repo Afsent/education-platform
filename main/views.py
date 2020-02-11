@@ -8,6 +8,24 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .forms import ChangeUserInfoForm, RegisterUserForm
 from django.views.generic.base import TemplateView
+from django.core.signing import BadSignature
+from .utilities import signer
+
+
+def user_activate(request, sign):
+    try:
+        username = signer.unsign(sign)
+    except BadSignature:
+        return render(request, 'registration/bad_signature.html')
+    user = get_object_or_404(AdvUser, username=username)
+    if user.is_activated:
+        template = 'registration/user_is_activated.html'
+    else:
+        template = 'registration/activation_done.html'
+        user.is_active = True
+        user.is_activated = True
+        user.save()
+    return render(request, template)
 
 
 class RegisterUserView(CreateView):
