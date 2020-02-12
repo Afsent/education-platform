@@ -23,6 +23,35 @@ class AdvUser(AbstractUser):
         pass
 
 
+class Rubric(models.Model):
+    name = models.CharField(max_length=20, db_index=True, unique=True,
+                            verbose_name='Haзвaниe')
+    order = models.SmallIntegerField(default=0, db_index=True,
+                                     verbose_name='Пopядoк')
+    super_rubric = models.ForeignKey('SuperRubric',
+                                     on_delete=models.PROTECT, null=True,
+                                     Ьlank=True,
+                                     verbose_name='Haдpyбpикa')
+
+
+class SuperRubricManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(super_rubric__isnull=True)
+
+
+class SuperRubric(Rubric):
+    objects = SuperRubricManager()
+
+    def str(self):
+        return self.name
+
+    class Meta:
+        proxy = True
+        ordering = ('order', 'name')
+        verbose_name = 'Надрубрика'
+        verbose_name_plural = 'Надрубрики'
+
+
 class Lessons(models.Model):
     id_lesson = models.AutoField(primary_key=True)
     id_teacher = models.ForeignKey('Teachers', models.DO_NOTHING,
