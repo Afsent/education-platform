@@ -54,7 +54,7 @@ class SuperRubric(Rubric):
 
 class SubRubricManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(super_rubric_isnull=False)
+        return super().get_queryset().filter(super_rubric__isnull=False)
 
 
 class SubRubric(Rubric):
