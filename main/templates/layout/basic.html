@@ -30,10 +30,12 @@
                     <a class="dropdown-item" href="{% url 'profile_change' %}">Изменить
                         личные
                         данные</a>
-                    <a class="dropdown-item" href="{% url 'password_change' %}">Изменить
+                    <a class="dropdown-item"
+                       href="{% url 'password_change' %}">Изменить
                         пароль</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{% url 'logout' %}">Выйти</a>
+                    <a class="dropdown-item"
+                       href="{% url 'logout' %}">Выйти</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'profile_delete' %}">Удалить</a>
                 </div>
@@ -51,15 +53,15 @@
 <div class="row">
     <nav class="col-md-auto nav flex-column border">
         <a class="nav-link root"
-           href="{% url 'main' %}">Главная
-        </a>
-        <span class=" nav-link root font-weight-bold">IT</span>
-        <a class="nav-link" href="#">Java</a>
-        <a class="nav-link" href="#">Python</a>
-        <a class="nav-link" href="#">C++</a>
-        <span class="nav-link root font-weight-bold" href="#">Математика</span>
-        <a class="nav-link" href="#">Линейная алгебра</a>
-        <a class="nav-link" href="#">Статистика</a>
+           href="{% url 'main' %}">Главная</a>
+        {% for rubric in rubrics %}
+            {% ifchanged rubric.super_rubric.pk %}
+                <span class="nav-link root font-weight-bold">
+                    {{ rubric.super_rubric.name }}</span>
+            {% endifchanged %}
+            <a class="nav-link"
+               href="{% url 'by_rubric' pk=rubric.pk %}">{{ rubric.name }}</a>
+        {% endfor %}
     </nav>
     <section class="col border ру-2">
         {% bootstrap_messages %}

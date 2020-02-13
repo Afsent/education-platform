@@ -62,6 +62,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'main.middlewares.lwm_context_processor',
             ],
         },
     },
@@ -126,5 +127,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aleexzhuravlev@gmail.com'
-EMAIL_HOST_PASSWORD = '*******'
+EMAIL_HOST_PASSWORD = '********'
 DEFAULT_FROM_EMAIL = 'aleexzhuravlev@gmail.com'

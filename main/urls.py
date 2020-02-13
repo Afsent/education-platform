@@ -1,9 +1,10 @@
 from django.urls import path
 from .views import profile, BBLoginView, BBLogoutView, ChangeUserInfoView, \
     BBPasswordChangeView, RegisterDoneView, RegisterUserView, user_activate, \
-    main, DeleteUserView
+    main, DeleteUserView, by_rubric
 
 urlpatterns = [
+    path('<int:pk>/', by_rubric, name='by_rubric'),
     path('', main, name='main'),
 ]
 

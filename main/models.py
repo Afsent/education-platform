@@ -42,7 +42,7 @@ class SuperRubricManager(models.Manager):
 class SuperRubric(Rubric):
     objects = SuperRubricManager()
 
-    def str(self):
+    def __str__(self):
         return self.name
 
     class Meta:
@@ -60,7 +60,7 @@ class SubRubricManager(models.Manager):
 class SubRubric(Rubric):
     objects = SubRubricManager()
 
-    def str(self):
+    def __str__(self):
         return '%s - %s' % (self.super_rubric.name, self.name)
 
     class Meta:
