@@ -19,6 +19,11 @@ class AdvUser(AbstractUser):
     send_messages = models.BooleanField(default=True,
                                         verbose_name='Слать оповещения о новых комментариях?')
 
+    def delete(self, *args, **kwargs):
+        for lesson in self.lesson_set.all():
+            lesson.delete()
+        super().delete(*args, **kwargs)
+
     class Meta(AbstractUser.Meta):
         pass
 
@@ -78,13 +83,13 @@ class Lesson(models.Model):
     content = models.TextField(verbose_name='Oпиcaниe')
     contacts = models.TextField(verbose_name='Koнтaкты')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path,
-                              vеrbоsе_nаmе='Изображение')
+                              verbose_name='Изображение')
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Преподаватель')
     is_active = models.BooleanField(default=True, db_index=True,
-                                    vеrbоsе_nаmе='Выводить в списке?')
+                                    verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True,
-                                      vеrbоsе_nаmе='Опубликовано')
+                                      verbose_name='Опубликовано')
 
     def __str__(self):
         """
@@ -105,9 +110,9 @@ class Lesson(models.Model):
 
 class AdditionalFile(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
-                               vеrbоsе_nаmе='Урок')
+                               verbose_name='Урок')
     image = models.FileField(upload_to=get_timestamp_path,
-                             vеrbоsе_nаmе='Файл')
+                             verbose_name='Файл')
 
     class Meta:
         verbose_name_plural = 'Дополнительные материалы'

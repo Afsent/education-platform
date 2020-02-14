@@ -132,9 +132,6 @@ EMAIL_HOST_USER = 'aleexzhuravlev@gmail.com'
 EMAIL_HOST_PASSWORD = '********'
 DEFAULT_FROM_EMAIL = 'aleexzhuravlev@gmail.com'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
-
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
@@ -144,3 +141,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 THUMBNAIL_BASEDIR = 'thumbnails'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

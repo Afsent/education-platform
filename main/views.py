@@ -1,6 +1,6 @@
 from django.contrib.auth import logout
 from django.shortcuts import render, get_object_or_404
-from .models import Lessons, AdvUser
+from .models import AdvUser
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -100,7 +100,7 @@ def by_rubric(request, pk):
 
 @login_required
 def main(request):
-    lessons = Lessons.objects.all()
+    lessons = 'git'
     return render(request,
                   'main.html', context={'lessons': lessons})
 

@@ -27,5 +27,5 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns.append(path('static/<path:path>', never_cache(serve)))
-    urlpatterns += static(settings.МEDIA_URL,
-                          document_root=settings.МEDIA_RООТ)
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
