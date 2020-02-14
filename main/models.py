@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import Signal
-from .utilities import send_activation_notification
+from .utilities import send_activation_notification, get_timestamp_path
 
 user_registrated = Signal(providing_args=['instance'])
 
@@ -71,27 +71,47 @@ class SubRubric(Rubric):
         verbose_name_plural = 'Подрубрики'
 
 
-class Lessons(models.Model):
-    id_lesson = models.AutoField(primary_key=True)
-    id_teacher = models.ForeignKey('Teachers', models.DO_NOTHING,
-                                   db_column='id_teacher')
-    id_subject = models.ForeignKey('Subjects', models.DO_NOTHING,
-                                   db_column='id_subject')
-    name = models.CharField(max_length=80)
-    video = models.CharField(max_length=100, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+class Lesson(models.Model):
+    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
+                               verbose_name='Рубрика')
+    title = models.CharField(max_length=40, verbose_name='Урок')
+    content = models.TextField(verbose_name='Oпиcaниe')
+    contacts = models.TextField(verbose_name='Koнтaкты')
+    image = models.ImageField(blank=True, upload_to=get_timestamp_path,
+                              vеrbоsе_nаmе='Изображение')
+    author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
+                               verbose_name='Преподаватель')
+    is_active = models.BooleanField(default=True, db_index=True,
+                                    vеrbоsе_nаmе='Выводить в списке?')
+    created_at = models.DateTimeField(auto_now_add=True, db_index=True,
+                                      vеrbоsе_nаmе='Опубликовано')
 
     def __str__(self):
         """
         String for representing the Model object.
         """
-        return f'{self.name}'
+        return f'{self.title}'
+
+    def delete(self, *args, **kwargs):
+        for ai in self.additionalfile_set.all():
+            ai.delete()
+        super().delete(*args, **kwargs)
 
     class Meta:
-        managed = False
-        db_table = 'lessons'
-        verbose_name = 'Урок'
         verbose_name_plural = 'Уроки'
+        verbose_name = 'Урок'
+        ordering = ['-created_at']
+
+
+class AdditionalFile(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
+                               vеrbоsе_nаmе='Урок')
+    image = models.FileField(upload_to=get_timestamp_path,
+                             vеrbоsе_nаmе='Файл')
+
+    class Meta:
+        verbose_name_plural = 'Дополнительные материалы'
+        verbose_name = 'Дополнительная материалы'
 
 
 class SubjectGroups(models.Model):
