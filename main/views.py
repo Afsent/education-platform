@@ -117,6 +117,13 @@ def by_rubric(request, pk):
     return render(request, 'main/by_rubric.html', context)
 
 
+def detail(request, rubric_pk, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+    ais = lesson.additionalfile_set.all()
+    context = {'lesson': lesson, 'ais': ais}
+    return render(request, 'main/detail.html', context)
+
+
 @login_required
 def main(request):
     lessons = 'git'
