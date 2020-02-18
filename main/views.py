@@ -114,7 +114,7 @@ def by_rubric(request, pk):
     page = paginator.get_page(page_num)
     context = {'ruЬric': rubric, 'page': page, 'bbs': page.object_list,
                'form': form}
-    return render(request, 'templates/by_rubric.html', context)
+    return render(request, 'main/by_rubric.html', context)
 
 
 @login_required
