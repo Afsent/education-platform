@@ -16,7 +16,7 @@
             <div class="col">&nbsp;</div>
             <form class="col-rnd-auto form-inline">
                 {% bootstrap_form form show_label=False %}
-                {% bootstrap_button соntеnt='Искать' button_type='submit' %}
+                {% bootstrap_button content='Искать' button_type='submit' %}
             </form>
         </div>
     </div>
@@ -25,7 +25,7 @@
             {% for lesson in lessons %}
                 <li class="media my-5 р-3 border">
                     {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
-                    <а href="{{ url }}{{ all }}">
+                    <a href="{{ url }}{{ all }}">
                         {% if lesson.image %}
                             <img class="mr-3"
                                  src="{% thumbnail lesson.image 'default' %}">
@@ -33,7 +33,7 @@
                             <img class="mr-3"
                                  src="{% static 'main/empty.jpg' %}">
                         {% endif %}
-                    </а>
+                    </a>
                     <div class="media-body">
                         <h3><a href="{{ url }}{{ all }}">
                             {{ lesson.title }}</a></h3>

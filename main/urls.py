@@ -4,7 +4,7 @@ from .views import profile, BBLoginView, BBLogoutView, ChangeUserInfoView, \
     main, DeleteUserView, by_rubric, detail
 
 urlpatterns = [
-    path('<int:ruЬricyk>/<int:pk>/', detail, naшe='detail'),
+    path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
     path('<int:pk>/', by_rubric, name='by_rubric'),
     path('', main, name='main'),
 ]

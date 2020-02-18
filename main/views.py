@@ -112,7 +112,7 @@ def by_rubric(request, pk):
     else:
         page_num = 1
     page = paginator.get_page(page_num)
-    context = {'ruЬric': rubric, 'page': page, 'bbs': page.object_list,
+    context = {'rubric': rubric, 'page': page, 'lessons': page.object_list,
                'form': form}
     return render(request, 'main/by_rubric.html', context)
 
