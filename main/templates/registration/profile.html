@@ -1,4 +1,6 @@
 {% extends "layout/basic.html" %}
+{% load thumbnail %}
+{% load static %}
 {% block title %}Профиль пользователя{% endblock %}
 {% block content %}
     <h2>Профиль пользователя {{ user.usernarne }}</h2>
@@ -8,4 +10,29 @@
         <p>Здравствуйте!</p>
     {% endif %}
     <h3>Ваши курсы</h3>
+    {% if lessons %}
+        <ul class="list-unstyled">
+            {% for lesson in lessons %}
+                <li class="media my-5 р-3 border">
+                    {% url 'profile_lesson_detail' pk=lesson.pk as url %}
+                    <a href="{{ url }}{{ all }}">
+                        {% if lesson.image %}
+                            <img class="mr-3"
+                                 src="{% thumbnail lesson.image 'default' %}">
+                        {% else %}
+                            <img class="mr-3"
+                                 src="{% static 'main/empty.jpg' %}">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <h3><a href="{{ url }}{{ all }}">
+                            {{ lesson.title }}</a></h3>
+                        <div>{{ lesson.content }}</div>
+                        <p class="text-right font-italic">
+                            {{ lesson.created_at }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}

@@ -117,11 +117,20 @@ def by_rubric(request, pk):
     return render(request, 'main/by_rubric.html', context)
 
 
+@login_required
 def detail(request, rubric_pk, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     ais = lesson.additionalfile_set.all()
     context = {'lesson': lesson, 'ais': ais}
     return render(request, 'main/detail.html', context)
+
+
+@login_required
+def profile_lesson_detail(request, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+    ais = lesson.additionalfile_set.all()
+    context = {'lesson': lesson, 'ais': ais}
+    return render(request, 'main/profile_lesson_detail.html', context)
 
 
 @login_required
@@ -133,4 +142,6 @@ def main(request):
 
 @login_required
 def profile(request):
-    return render(request, 'registration/profile.html')
+    lessons = Lesson.objects.filter(author=request.user.pk)
+    context = {'lessons': lessons}
+    return render(request, 'registration/profile.html', context)
