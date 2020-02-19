@@ -148,6 +148,7 @@ def profile(request):
     return render(request, 'registration/profile.html', context)
 
 
+@login_required
 def profile_lesson_add(request):
     if request.method == 'POST':
         form = LessonForm(request.POST, request.FILES)
@@ -164,3 +165,37 @@ def profile_lesson_add(request):
         formset = AIFormSet()
     context = {'form': form, 'formset': formset}
     return render(request, 'registration/profile_lesson_add.html', context)
+
+
+@login_required
+def profile_lesson_change(request, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+    if request.method == 'POST':
+        form = LessonForm(request.POST, request.FILES, instance=lesson)
+        if form.is_valid():
+            lesson = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=lesson)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS,
+                                     'Урок исправлен')
+                return redirect('profile')
+    else:
+        form = LessonForm(instance=lesson)
+        formset = AIFormSet(instance=lesson)
+    context = {'form': form, 'formset': formset}
+    return render(request, 'registration/profile_lesson_change.html', context)
+
+
+@login_required
+def profile_lesson_delete(request, pk):
+    lesson = get_object_or_404(Lesson, pk=pk)
+    if request.method == 'POST':
+        lesson.delete()
+        messages.add_message(request, messages.SUCCESS,
+                             'Урок удален')
+        return redirect('profile')
+    else:
+        context = {'lesson': lesson}
+        return render(request, 'registration/profile_lesson_delete.html',
+                      context)
