@@ -111,7 +111,7 @@ class Lesson(models.Model):
 class AdditionalFile(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
                                verbose_name='Урок')
-    image = models.FileField(upload_to=get_timestamp_path,
+    image = models.ImageField(upload_to=get_timestamp_path,
                              verbose_name='Файл')
 
     class Meta:

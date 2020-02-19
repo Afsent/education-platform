@@ -126,9 +126,9 @@ def detail(request, rubric_pk, pk):
 
 @login_required
 def main(request):
-    lessons = 'git'
-    return render(request,
-                  'main.html', context={'lessons': lessons})
+    lessons = Lesson.objects.filter(is_active=True)[:10]
+    context = {'lessons': lessons}
+    return render(request, 'main.html', context)
 
 
 @login_required

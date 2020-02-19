@@ -1,8 +1,31 @@
 {% extends "layout/basic.html" %}
-
+{% load thumbnail %}
+{% load static %}
 {% block content %}
-    <h1>Добро пожаловать</h1>
-    {% for lesson in lessons %}
-        <li>{{ lesson }}</li>
-    {% endfor %}
+    <h1>Новые уроки</h1>
+    {% if lessons %}
+        <ul class="list-unstyled">
+            {% for lesson in lessons %}
+                <li class="media my-5 р-3 border">
+                    {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
+                    <a href="{{ url }}{{ all }}">
+                        {% if lesson.image %}
+                            <img class="mr-3"
+                                 src="{% thumbnail lesson.image 'default' %}">
+                        {% else %}
+                            <img class="mr-3"
+                                 src="{% static 'main/empty.jpg' %}">
+                        {% endif %}
+                    </a>
+                    <div class="media-body">
+                        <h3><a href="{{ url }}{{ all }}">
+                            {{ lesson.title }}</a></h3>
+                        <div>{{ lesson.content }}</div>
+                        <p class="text-right font-italic">
+                            {{ lesson.created_at }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 {% endblock %}
