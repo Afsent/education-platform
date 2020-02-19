@@ -1,7 +1,7 @@
 from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import AdvUser, SubRubric, Lesson
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -9,7 +9,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
-from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm
+from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, \
+    LessonForm, AIFormSet
 from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
 from .utilities import signer
@@ -145,3 +146,21 @@ def profile(request):
     lessons = Lesson.objects.filter(author=request.user.pk)
     context = {'lessons': lessons}
     return render(request, 'registration/profile.html', context)
+
+
+def profile_lesson_add(request):
+    if request.method == 'POST':
+        form = LessonForm(request.POST, request.FILES)
+        if form.is_valid():
+            lesson = form.save()
+            formset = AIFormSet(request.POST, request.FILES, instance=lesson)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS,
+                                     'Урок добавлен')
+                return redirect('profile')
+    else:
+        form = LessonForm(initial={'author': request.user.pk})
+        formset = AIFormSet()
+    context = {'form': form, 'formset': formset}
+    return render(request, 'registration/profile_lesson_add.html', context)
