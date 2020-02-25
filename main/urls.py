@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import profile, BBLoginView, BBLogoutView, ChangeUserInfoView, \
-    BBPasswordChangeView, RegisterDoneView, RegisterUserView, user_activate, \
+from .views import profile, LWMLoginView, LWMLogoutView, ChangeUserInfoView, \
+    LWMPasswordChangeView, RegisterDoneView, RegisterUserView, user_activate, \
     main, DeleteUserView, by_rubric, detail, profile_lesson_detail, \
     profile_lesson_add, profile_lesson_change, profile_lesson_delete
 
@@ -20,12 +20,12 @@ urlpatterns += [
          name='profile_lesson_add'),
     path('accounts/profile/<int:pk>/', profile_lesson_detail,
          name='profile_lesson_detail'),
-    path('accounts/login/', BBLoginView.as_view(), name='login'),
+    path('accounts/login/', LWMLoginView.as_view(), name='login'),
     path('accounts/profile/', profile, name='profile'),
-    path('accounts/logout/', BBLogoutView.as_view(), name='logout'),
+    path('accounts/logout/', LWMLogoutView.as_view(), name='logout'),
     path('accounts/profile/change/', ChangeUserInfoView.as_view(),
          name='profile_change'),
-    path('accounts/password/change/', BBPasswordChangeView.as_view(),
+    path('accounts/password/change/', LWMPasswordChangeView.as_view(),
          name='password_change'),
     path('accounts/register/done/', RegisterDoneView.as_view(),
          name='register_done'),

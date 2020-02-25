@@ -44,7 +44,7 @@ class RegisterDoneView(TemplateView):
     template_name = 'registration/register_done.html'
 
 
-class BBPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
+class LWMPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
                            PasswordChangeView):
     template_name = 'registration/password_change.html'
     success_url = reverse_lazy('profile')
@@ -68,11 +68,11 @@ class ChangeUserInfoView(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
         return get_object_or_404(queryset, pk=self.user_id)
 
 
-class BBLoginView(LoginView):
+class LWMLoginView(LoginView):
     template_name = 'registration/login.html'
 
 
-class BBLogoutView(LoginRequiredMixin, LogoutView):
+class LWMLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'registration/logout.html'
 
 

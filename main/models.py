@@ -15,9 +15,9 @@ user_registrated.connect(user_registrated_dispatcher)
 
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True,
-                                       verbose_name='Прошел активацию?')
+        verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True,
-                                        verbose_name='Слать оповещения о новых комментариях?')
+        verbose_name='Слать оповещения о новых комментариях?')
 
     def delete(self, *args, **kwargs):
         for lesson in self.lesson_set.all():
