@@ -27,10 +27,10 @@
                     {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
                     <a href="{{ url }}{{ all }}">
                         {% if lesson.image %}
-                            <img class="mr-3"
+                            <img lass="img-thumbnail"
                                  src="{% thumbnail lesson.image 'default' %}">
                         {% else %}
-                            <img class="mr-3"
+                            <img class="img-thumbnail"
                                  src="{% static 'main/empty.jpg' %}">
                         {% endif %}
                     </a>
