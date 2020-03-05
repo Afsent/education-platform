@@ -12,13 +12,17 @@ from .models import AdvUser
 class RegisterUserForm(forms.ModelForm):
     email = forms.EmailField(required=True,
                              label='Адрес электронной почты')
-    password1 = forms.CharField(label='Пароль',
-                                widget=forms.PasswordInput,
-                                help_text=password_validation.password_validators_help_text_html())
+    password1 = forms.CharField(
+        label='Пароль',
+        widget=forms.PasswordInput,
+        help_text=password_validation.password_validators_help_text_html()
+    )
 
-    password2 = forms.CharField(label='Пароль (повторно)',
-                                widget=forms.PasswordInput,
-                                help_text='Введите тот же самьй! пароль еще раз для проверки')
+    password2 = forms.CharField(
+        label='Пароль (повторно)',
+        widget=forms.PasswordInput,
+        help_text='Введите тот же самьй! пароль еще раз для проверки'
+    )
 
     def clean_password1(self):
         password1 = self.cleaned_data['password1']

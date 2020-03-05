@@ -15,9 +15,9 @@ user_registrated.connect(user_registrated_dispatcher)
 
 class AdvUser(AbstractUser):
     is_activated = models.BooleanField(default=True, db_index=True,
-        verbose_name='Прошел активацию?')
+                                       verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True,
-        verbose_name='Слать оповещения о новых комментариях?')
+                                        verbose_name='Слать оповещения о новых комментариях?')
 
     def delete(self, *args, **kwargs):
         for lesson in self.lesson_set.all():
@@ -84,6 +84,8 @@ class Lesson(models.Model):
     contacts = models.TextField(verbose_name='Koнтaкты')
     image = models.ImageField(blank=True, upload_to=get_timestamp_path,
                               verbose_name='Изображение')
+    video = models.CharField(max_length=140, verbose_name='Видео',
+                             default=None)
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
                                verbose_name='Преподаватель')
     is_active = models.BooleanField(default=True, db_index=True,
@@ -112,63 +114,8 @@ class AdditionalFile(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
                                verbose_name='Урок')
     image = models.ImageField(upload_to=get_timestamp_path,
-                             verbose_name='Файл')
+                              verbose_name='Файл')
 
     class Meta:
         verbose_name_plural = 'Дополнительные материалы'
         verbose_name = 'Дополнительная материалы'
-
-
-class SubjectGroups(models.Model):
-    id_group_sub = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=45)
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return f'{self.name}'
-
-    class Meta:
-        managed = False
-        db_table = 'subject_groups'
-        verbose_name = 'Направление'
-        verbose_name_plural = 'Направления'
-
-
-class Subjects(models.Model):
-    id_subject = models.AutoField(primary_key=True)
-    id_group_sub = models.ForeignKey(SubjectGroups, models.DO_NOTHING,
-                                     db_column='id_group_sub')
-    name = models.CharField(max_length=45)
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return f'{self.name}'
-
-    class Meta:
-        managed = False
-        db_table = 'subjects'
-        verbose_name = 'Предмет'
-        verbose_name_plural = 'Предметы'
-
-
-class Teachers(models.Model):
-    id_teacher = models.AutoField(primary_key=True)
-    id_subject = models.ForeignKey(Subjects, models.DO_NOTHING,
-                                   db_column='id_subject')
-    name = models.CharField(max_length=45, blank=True, null=True)
-
-    def __str__(self):
-        """
-        String for representing the Model object.
-        """
-        return f'{self.name}'
-
-    class Meta:
-        managed = False
-        db_table = 'teachers'
-        verbose_name = 'Преподаватель'
-        verbose_name_plural = 'Преподаватели'

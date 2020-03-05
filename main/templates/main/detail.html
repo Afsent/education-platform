@@ -3,12 +3,13 @@
 {% block content %}
     <div class="container-fluid rnt-3">
         <div class="row">
-            {% if lesson.image %}
-                <div class="col-rnd-auto"><img src="{{ lesson.image.url }}"
-                                               class="main-image"></div>
-            {% endif %}
             <div class="col">
                 <h2>{{ lesson.title }}</h2>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item"
+                            src="https://www.youtube.com/embed/{{ lesson.video }}"
+                            allowfullscreen></iframe>
+                </div>
                 <p>{{ lesson.content }}</p>
                 <p>{{ lesson.contacts }}</p>
                 <p class="text-right fоnt-itаliс">Урок добавлен
