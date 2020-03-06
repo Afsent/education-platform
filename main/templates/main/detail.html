@@ -1,4 +1,5 @@
 {% extends "layout/basic.html" %}
+{% load bootstrap4 %}
 {% block title %}{{ lesson.title }} - {{ lesson.rubric.name }}{% endblock %}
 {% block content %}
     <div class="container-fluid rnt-3">
@@ -32,5 +33,23 @@
             Назад
         </a>
     </p>
+    <h4 class="mt-S">Hoвый комментарий</h4>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        {% buttons submit='Добавить' %}{% endbuttons %}
+    </form>
+    {% if comments %}
+        <div class="mt-5">
+            {% for comment in comments %}
+                <div class="my-2 р-2 border">
+                    <h5>{{ comment.author }}</h5>
+                    <p>{{ comment.content }}</p>
+                    <p class="text-right font-italic">
+                        {{ comment.created_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 

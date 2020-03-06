@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 
 from .models import user_registrated, SubRubric, SuperRubric, Lesson, \
-    AdditionalFile
+    AdditionalFile, Comment
 from .models import AdvUser
 
 
@@ -86,3 +86,10 @@ class LessonForm(forms.ModelForm):
 
 
 AIFormSet = inlineformset_factory(Lesson, AdditionalFile, fields='__all__')
+
+
+class UserCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('is_active',)
+        widgets = {'lesson': forms.HiddenInput}

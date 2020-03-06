@@ -2,7 +2,7 @@ from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import AdvUser, SubRubric, Lesson
+from .models import AdvUser, SubRubric, Lesson, Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -10,7 +10,7 @@ from django.views.generic.edit import UpdateView, CreateView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, \
-    LessonForm, AIFormSet
+    LessonForm, AIFormSet, UserCommentForm
 from django.views.generic.base import TemplateView
 from django.core.signing import BadSignature
 from .utilities import signer
@@ -45,7 +45,7 @@ class RegisterDoneView(TemplateView):
 
 
 class LWMPasswordChangeView(SuccessMessageMixin, LoginRequiredMixin,
-                           PasswordChangeView):
+                            PasswordChangeView):
     template_name = 'registration/password_change.html'
     success_url = reverse_lazy('profile')
     success_message = 'Пароль пользователя изменен'
@@ -122,7 +122,27 @@ def by_rubric(request, pk):
 def detail(request, rubric_pk, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     ais = lesson.additionalfile_set.all()
-    context = {'lesson': lesson, 'ais': ais}
+    comments = Comment.objects.filter(lesson=pk, is_active=True)
+    initial = {'lesson': lesson.pk}
+    context = {'lesson': lesson, 'ais': ais, 'comments': comments}
+    if request.user.is_authenticated:
+        initial['author'] = request.user.username
+        form_class = UserCommentForm
+        form = form_class(initial=initial)
+        if request.method == 'POST':
+            c_form = form_class(request.POST)
+            if c_form.is_valid():
+                c_form.save()
+                messages.add_message(request, messages.SUCCESS,
+                                     'Комментарий добавлен')
+            else:
+                form = c_form
+                messages.add_message(request, messages.WARNING,
+                                     'Комментарий не добавлен')
+        context['form'] = form
+    else:
+        context['form'] = None
+
     return render(request, 'main/detail.html', context)
 
 
@@ -130,7 +150,8 @@ def detail(request, rubric_pk, pk):
 def profile_lesson_detail(request, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     ais = lesson.additionalfile_set.all()
-    context = {'lesson': lesson, 'ais': ais}
+    comments = Comment.objects.filter(lesson=pk, is_active=True)
+    context = {'lesson': lesson, 'ais': ais, 'comments': comments}
     return render(request, 'main/profile_lesson_detail.html', context)
 
 

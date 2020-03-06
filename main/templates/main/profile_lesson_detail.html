@@ -27,6 +27,18 @@
             {% endfor %}
         </div>
     {% endif %}
+    {% if comments %}
+        <div class="mt-5">
+            {% for comment in comments %}
+                <div class="my-2 р-2 border">
+                    <h5>{{ comment.author }}</h5>
+                    <p>{{ comment.content }}</p>
+                    <p class="text-right font-italic">
+                        {{ comment.created_at }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <p>
         <a href="{% url 'profile' %}{{ all }}">
             Назад
