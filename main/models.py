@@ -18,6 +18,8 @@ class AdvUser(AbstractUser):
                                        verbose_name='Прошел активацию?')
     send_messages = models.BooleanField(default=True,
                                         verbose_name='Слать оповещения о новых комментариях?')
+    is_teacher = models.BooleanField(default=False,
+                                     verbose_name='Является учителем?')
 
     def delete(self, *args, **kwargs):
         for lesson in self.lesson_set.all():

@@ -49,7 +49,7 @@ class AdvUserAdmin(admin.ModelAdmin):
     list_filter = (NonactivatedFilter,)
     fields = (('username', 'email'), ('first_name', 'last_name'),
               ('send_messages', 'is_active', 'is_activated'),
-              ('is_staff', 'is_superuser'),
+              ('is_staff', 'is_superuser', 'is_teacher'),
               'groups', 'user_permissions',
               ('last_login', 'date_joined'))
     readonly_fields = ('last_login', 'date_joined')

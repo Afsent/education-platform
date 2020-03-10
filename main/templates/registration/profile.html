@@ -9,7 +9,9 @@
     {% else %}
         <p>Здравствуйте!</p>
     {% endif %}
-    <p><a href="{% url 'profile_lesson_add' %}">Добавить урок</a></p>
+    {% if user.is_teacher %}
+        <p><a href="{% url 'profile_lesson_add' %}">Добавить урок</a></p>
+    {% endif %}
     <h3>Ваши уроки</h3>
     {% if lessons %}
         <ul class="list-unstyled">
