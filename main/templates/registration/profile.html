@@ -33,10 +33,12 @@
                         <div>{{ lesson.content }}</div>
                         <p class="text-right font-italic">
                             {{ lesson.created_at }}</p>
-                        <p class="text-right mt-2">
-                            <a href="{% url 'profile_lesson_change' pk=lesson.pk %}">Исправить</a>
-                            <a href="{% url 'profile_lesson_delete' pk=lesson.pk %}">Удалить</a>
-                        </p>
+                        {% if user.is_teacher %}
+                            <p class="text-right mt-2">
+                                <a href="{% url 'profile_lesson_change' pk=lesson.pk %}">Исправить</a>
+                                <a href="{% url 'profile_lesson_delete' pk=lesson.pk %}">Удалить</a>
+                            </p>
+                        {% endif %}
                     </div>
                 </li>
             {% endfor %}

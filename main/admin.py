@@ -64,7 +64,7 @@ class SubRubricInline(admin.TabularInline):
 
 
 class SuperRubricAdmin(admin.ModelAdmin):
-    exclude = ('super_rubric',)
+    exclude = ('super_rubric', 'description')
     inlines = (SubRubricInline,)
 
 
