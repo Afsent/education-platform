@@ -39,7 +39,8 @@ class Rubric(models.Model):
                                      on_delete=models.PROTECT, null=True,
                                      blank=True,
                                      verbose_name='Надрубрика')
-    description = models.TextField(default=None, verbose_name='Описание курса')
+    description = models.TextField(default=None, null=True,
+                                   verbose_name='Описание курса')
 
 
 class SuperRubricManager(models.Manager):
