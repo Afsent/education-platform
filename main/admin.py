@@ -4,7 +4,8 @@ from django.contrib import admin
 
 from main.forms import SubRubricForm
 from .utilities import send_activation_notification
-from .models import AdvUser, SubRubric, SuperRubric, AdditionalFile, Lesson
+from .models import AdvUser, SubRubric, SuperRubric, AdditionalFile, Lesson, \
+    Comment
 
 
 def send_activation_notifications(modeladmin, request, queryset):
@@ -85,8 +86,16 @@ class AdditionalFileInline(admin.TabularInline):
 class LessonAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'content', 'author', 'created_at')
     fields = (('rubric', 'author'), 'title', 'video', 'content',
-              'contacts', 'image', 'is_active')
+              'contacts', 'is_active')
     inlines = (AdditionalFileInline,)
 
 
 admin.site.register(Lesson, LessonAdmin)
+
+
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('content', 'author', 'lesson', 'created_at')
+    fields = (('lesson', 'author'), 'content', 'is_active')
+
+
+admin.site.register(Comment, CommentAdmin)

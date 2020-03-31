@@ -2,54 +2,59 @@
 {% load bootstrap4 %}
 {% block title %}{{ lesson.title }} - {{ lesson.rubric.name }}{% endblock %}
 {% block content %}
-    <div class="container-fluid rnt-3">
+    <div class="container-fluid rnt-3" style="margin-top: 1rem">
         <div class="row">
             <div class="col">
                 <h2>{{ lesson.title }}</h2>
+                <br>
                 <div class="embed-responsive embed-responsive-16by9">
                     <iframe class="embed-responsive-item"
                             src="https://www.youtube.com/embed/{{ lesson.video }}"
                             allowfullscreen></iframe>
                 </div>
+                <br>
                 <p>{{ lesson.content }}</p>
                 <p>{{ lesson.contacts }}</p>
                 <p class="text-right fоnt-itаliс">Урок добавлен
                     {{ lesson.created_at }}
                 </p>
+
+                {% if ais %}
+                    <h4>Список дополнительных файлов:</h4>
+                    {% for ai in ais %}
+                        <div>
+                            <a class="btn btn-light"
+                               href="{{ ai.file.url }}">
+                                {{ ai.file.name }}</a>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>
-    {% if ais %}
-        <div class="d-flex justify-content-between flex-wrap rnt-5">
-            {% for ai in ais %}
-                <div>
-                    <img class="additional-image" src="{{ ai.image.url }}">
-                </div>
-            {% endfor %}
+    <hr>
+    <div class="container-fluid" style="margin-top: 2rem">
+        <div>
+            <h4 class="mt-S">Hoвый комментарий</h4>
+            <form method="post">
+                {% csrf_token %}
+                {% bootstrap_form form layout='horizontal' %}
+                {% buttons submit='Добавить' %}{% endbuttons %}
+            </form>
         </div>
-    {% endif %}
-    <p>
-        <a href="{% url 'by_rubric' pk=lesson.rubric.pk %}{{ all }}">
-            Назад
-        </a>
-    </p>
-    <h4 class="mt-S">Hoвый комментарий</h4>
-    <form method="post">
-        {% csrf_token %}
-        {% bootstrap_form form layout='horizontal' %}
-        {% buttons submit='Добавить' %}{% endbuttons %}
-    </form>
-    {% if comments %}
-        <div class="mt-5">
-            {% for comment in comments %}
-                <div class="my-2 р-2 border">
-                    <h5>{{ comment.author }}</h5>
-                    <p>{{ comment.content }}</p>
-                    <p class="text-right font-italic">
-                        {{ comment.created_at }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+        <hr>
+        {% if comments %}
+            <div class="mt-5">
+                {% for comment in comments %}
+                    <div class="my-2 р-2">
+                        <h5>{{ comment.author }}</h5>
+                        <p>{{ comment.content }}</p>
+                        <p class="text-right font-italic">
+                            {{ comment.created_at }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
 

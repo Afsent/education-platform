@@ -41,6 +41,8 @@ class Rubric(models.Model):
                                      verbose_name='Надрубрика')
     description = models.TextField(default=None, null=True,
                                    verbose_name='Описание курса')
+    image = models.ImageField(blank=True, upload_to=get_timestamp_path,
+                              verbose_name='Изображение')
 
 
 class SuperRubricManager(models.Manager):
@@ -86,8 +88,6 @@ class Lesson(models.Model):
     title = models.CharField(max_length=40, verbose_name='Урок')
     content = models.TextField(verbose_name='Oпиcaниe')
     contacts = models.TextField(verbose_name='Koнтaкты')
-    image = models.ImageField(blank=True, upload_to=get_timestamp_path,
-                              verbose_name='Изображение')
     video = models.CharField(max_length=140, verbose_name='Видео',
                              default=None)
     author = models.ForeignKey(AdvUser, on_delete=models.CASCADE,
@@ -117,8 +117,9 @@ class Lesson(models.Model):
 class AdditionalFile(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
                                verbose_name='Урок')
-    image = models.ImageField(upload_to=get_timestamp_path,
-                              verbose_name='Файл')
+    file = models.FileField(upload_to=get_timestamp_path,
+                            verbose_name='Файл',
+                            default=None)
 
     class Meta:
         verbose_name_plural = 'Дополнительные материалы'
@@ -129,13 +130,19 @@ class Comment(models.Model):
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE,
                                verbose_name='Объявление')
     author = models.CharField(max_length=30, verbose_name='Автор')
-    content = models.TextField(verbose_name='Содержание')
+    content = models.CharField(max_length=255, verbose_name='Содержание')
     is_active = models.BooleanField(default=True, db_index=True,
                                     verbose_name='Выводить на экран?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True,
                                       verbose_name='Опубликован')
 
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.content}'
+
     class Meta:
         verbose_name_plural = 'Комментарии'
         verbose_name = 'Комментарий'
-        ordering = ['created_at']
+        ordering = ['-created_at']

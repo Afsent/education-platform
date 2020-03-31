@@ -12,6 +12,15 @@
 {% block content %}
     <h2 class="mb-2">{{ rubric }}</h2>
     <p class="font-italic">{{ rubric.description }}</p>
+    <a href="{{ url }}{{ all }}">
+        {% if rubric.image %}
+            <img lass="img-thumbnail"
+                 src="{% thumbnail rubric.image 'default' %}">
+        {% else %}
+            <img class="img-thumbnail"
+                 src="{% static 'main/empty.jpg' %}">
+        {% endif %}
+    </a>
     <div class="container-fluid mЬ-2">
         <div class="row">
             <div class="col">&nbsp;</div>
@@ -26,15 +35,6 @@
             {% for lesson in lessons %}
                 <li class="media my-5 р-3 border">
                     {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
-                    <a href="{{ url }}{{ all }}">
-                        {% if lesson.image %}
-                            <img lass="img-thumbnail"
-                                 src="{% thumbnail lesson.image 'default' %}">
-                        {% else %}
-                            <img class="img-thumbnail"
-                                 src="{% static 'main/empty.jpg' %}">
-                        {% endif %}
-                    </a>
                     <div class="media-body">
                         <h3><a href="{{ url }}{{ all }}">
                             {{ lesson.title }}</a></h3>
