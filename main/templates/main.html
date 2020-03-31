@@ -3,21 +3,21 @@
 {% load static %}
 {% load bootstrap4 %}
 {% block content %}
-    <h1>Новые уроки</h1>
+    <h1>Новые уроки:</h1>
     {% if lessons %}
-        <ul class="list-unstyled">
+        <div class="list-group" style="margin-top: 1rem">
             {% for lesson in lessons %}
-                <li class="media my-5 р-3 border">
-                    {% url 'detail' rubric_pk=lesson.rubric.pk pk=lesson.pk as url %}
-                    <div class="media-body">
-                        <h3><a href="{{ url }}{{ all }}">
-                            {{ lesson.title }}</a></h3>
-                        <div>{{ lesson.content }}</div>
-                        <p class="text-right font-italic">
-                            {{ lesson.created_at }}</p>
+                {% url 'detail' rubric_pk=lesson.rubric.pk pk=lesson.pk as url %}
+                <a href="{{ url }}{{ all }}"
+                   class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h3 class="mb-1">{{ lesson.rubric.name }}
+                            - {{ lesson.title }}</h3>
+                        <small>{{ lesson.created_at }}</small>
                     </div>
-                </li>
+                    <p class="mb-1">{{ lesson.content }}</p>
+                </a>
             {% endfor %}
-        </ul>
+        </div>
     {% endif %}
 {% endblock %}
