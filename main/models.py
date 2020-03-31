@@ -146,3 +146,55 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
         verbose_name = 'Комментарий'
         ordering = ['-created_at']
+
+
+class Quiz(models.Model):
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    description = models.TextField(default=None, null=True,
+                                   verbose_name='Описание вопросов')
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.description}'
+
+    class Meta:
+        verbose_name_plural = 'Тесты'
+        verbose_name = 'Тест'
+        ordering = ['-pub_date']
+
+
+class Question(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.question_text}'
+
+    class Meta:
+        verbose_name_plural = 'Вопросы'
+        verbose_name = 'Вопрос'
+        ordering = ['-pub_date']
+
+
+class Choice(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.choice_text}'
+
+    class Meta:
+        verbose_name_plural = 'Варианты ответа'
+        verbose_name = 'Вариант ответа'
+        ordering = ['-question']
