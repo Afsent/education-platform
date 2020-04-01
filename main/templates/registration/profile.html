@@ -12,21 +12,13 @@
     {% if user.is_teacher %}
         <p><a href="{% url 'profile_lesson_add' %}">Добавить урок</a></p>
     {% endif %}
-    <h3>Ваши уроки</h3>
+    <a href="{% url 'quiz_progress' %}">Результаты</a>
     {% if lessons %}
+        <h3>Ваши уроки</h3>
         <ul class="list-unstyled">
             {% for lesson in lessons %}
                 <li class="media my-5 р-3 border">
                     {% url 'profile_lesson_detail' pk=lesson.pk as url %}
-                    <a href="{{ url }}{{ all }}">
-                        {% if lesson.image %}
-                            <img class="mr-3"
-                                 src="{% thumbnail lesson.image 'default' %}">
-                        {% else %}
-                            <img class="mr-3"
-                                 src="{% static 'main/empty.jpg' %}">
-                        {% endif %}
-                    </a>
                     <div class="media-body">
                         <h3><a href="{{ url }}{{ all }}">
                             {{ lesson.title }}</a></h3>
