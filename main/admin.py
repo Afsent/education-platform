@@ -5,7 +5,8 @@ from django.contrib import admin
 from main.forms import SubRubricForm
 from .utilities import send_activation_notification
 from .models import AdvUser, SubRubric, SuperRubric, AdditionalFile, Lesson, \
-    Comment, Question, Quiz, Choice
+    Comment
+from quiz.models import Question, Quiz
 
 
 def send_activation_notifications(modeladmin, request, queryset):
@@ -99,18 +100,3 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Quiz)
-
-
-class ChoiceInline(admin.TabularInline):
-    model = Choice
-    extra = 3
-
-
-class QuestionAdmin(admin.ModelAdmin):
-    inlines = [ChoiceInline]
-
-
-admin.site.register(Question, QuestionAdmin)
-
-admin.site.register(Choice)
