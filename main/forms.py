@@ -2,7 +2,7 @@ from django import forms
 
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, RadioSelect
 
 from .models import user_registrated, SubRubric, SuperRubric, Lesson, \
     AdditionalFile, Comment
@@ -93,3 +93,11 @@ class UserCommentForm(forms.ModelForm):
         model = Comment
         exclude = ('is_active',)
         widgets = {'lesson': forms.HiddenInput, 'author': forms.HiddenInput}
+
+
+class QuestionForm(forms.Form):
+    def __init__(self, question, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        choice_list = [x for x in question.get_answers_list()]
+        self.fields["answers"] = forms.ChoiceField(choices=choice_list,
+                                                   widget=RadioSelect)

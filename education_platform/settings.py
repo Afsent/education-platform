@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_cleanup',
     'easy_thumbnails',
+    'quiz'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'education_platform.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'main/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,7 +106,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -129,13 +130,13 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'aleexzhuravlev@gmail.com'
-EMAIL_HOST_PASSWORD = '********'
+EMAIL_HOST_PASSWORD = '*******'
 DEFAULT_FROM_EMAIL = 'aleexzhuravlev@gmail.com'
 
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
-            'size': (96, 96),
+            'size': (820, 312),
             'crop': 'scale',
         },
     },
