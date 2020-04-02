@@ -29,7 +29,10 @@
                         </div>
                     {% endfor %}
                 {% endif %}
-                <a href="{% url 'qui' pk=lesson.pk %}">Исправить</a>
+                {% for item in quiz %}
+                    <a href="{% url 'quiz_start_page' slug=item.url %}">
+                        Тест</a>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -2,6 +2,8 @@ from django.contrib.auth import logout
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+
+from quiz.models import Quiz
 from .models import AdvUser, SubRubric, Lesson, Comment
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
@@ -123,8 +125,10 @@ def detail(request, rubric_pk, pk):
     lesson = get_object_or_404(Lesson, pk=pk)
     ais = lesson.additionalfile_set.all()
     comments = Comment.objects.filter(lesson=pk, is_active=True)
+    quiz = Quiz.objects.filter(lesson=lesson)
     initial = {'lesson': lesson.pk}
-    context = {'lesson': lesson, 'ais': ais, 'comments': comments}
+    context = {'lesson': lesson, 'ais': ais, 'comments': comments,
+               'quiz': quiz}
     if request.user.is_authenticated:
         initial['author'] = request.user.username
         form_class = UserCommentForm
