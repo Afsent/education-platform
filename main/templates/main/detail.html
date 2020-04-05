@@ -13,12 +13,23 @@
                             allowfullscreen></iframe>
                 </div>
                 <br>
-                <p>{{ lesson.content }}</p>
-                <p>{{ lesson.contacts }}</p>
-                <p class="text-right fоnt-itаliс">Урок добавлен
-                    {{ lesson.created_at }}
-                </p>
-
+                <p><b>Описание:</b> {{ lesson.content }}</p>
+                <p><b>Контакты преподавателя: </b>{{ lesson.contacts }}</p>
+                <div class="row">
+                    <div class="col">
+                        {% if next_lesson %}
+                            {% url 'detail' rubric_pk=lesson.rubric.pk pk=next_lesson.pk as url %}
+                            <a href="{{ url }} {{ all }}">Следующий урок</a>
+                        {% else %}
+                            <h6>Это был последний урок курса</h6>
+                        {% endif %}
+                    </div>
+                    <div class="col" style="align-items: end">
+                        <p class="text-right fоnt-itаliс">Урок добавлен
+                            {{ lesson.created_at }}
+                        </p>
+                    </div>
+                </div>
                 {% if ais %}
                     <div class="card">
                         <h4 class="card-header">Список дополнительных

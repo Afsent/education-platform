@@ -87,7 +87,7 @@ class AdditionalFileInline(admin.TabularInline):
 
 class LessonAdmin(admin.ModelAdmin):
     list_display = ('rubric', 'title', 'content', 'author', 'created_at')
-    fields = (('rubric', 'author'), 'title', 'video', 'content',
+    fields = (('rubric', 'author'), 'order', 'title', 'video', 'content',
               'contacts', 'is_active')
     inlines = (AdditionalFileInline,)
 

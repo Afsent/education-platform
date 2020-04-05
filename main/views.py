@@ -109,7 +109,7 @@ def by_rubric(request, pk):
     else:
         keyword = ''
     form = SearchForm(initial={'keyword': keyword})
-    paginator = Paginator(lessons, 2)
+    paginator = Paginator(lessons, 10)
     if 'page' in request.GET:
         page_num = request.GET['page']
     else:
@@ -126,9 +126,11 @@ def detail(request, rubric_pk, pk):
     ais = lesson.additionalfile_set.all()
     comments = Comment.objects.filter(lesson=pk, is_active=True)
     quiz = Quiz.objects.filter(lesson=lesson)
+    next_lesson = Lesson.objects.filter(rubric_id=rubric_pk,
+                                        order=lesson.order+1)
     initial = {'lesson': lesson.pk}
     context = {'lesson': lesson, 'ais': ais, 'comments': comments,
-               'quiz': quiz}
+               'quiz': quiz, 'next_lesson': next_lesson.first()}
     if request.user.is_authenticated:
         initial['author'] = request.user.username
         form_class = UserCommentForm

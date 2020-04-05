@@ -96,6 +96,8 @@ class Lesson(models.Model):
                                     verbose_name='Выводить в списке?')
     created_at = models.DateTimeField(auto_now_add=True, db_index=True,
                                       verbose_name='Опубликовано')
+    order = models.SmallIntegerField(default=0, db_index=True,
+                                     verbose_name='Порядок')
 
     def __str__(self):
         """
@@ -111,7 +113,7 @@ class Lesson(models.Model):
     class Meta:
         verbose_name_plural = 'Уроки'
         verbose_name = 'Урок'
-        ordering = ['-created_at']
+        ordering = ('order', '-created_at')
 
 
 class AdditionalFile(models.Model):
