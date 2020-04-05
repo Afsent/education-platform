@@ -20,6 +20,10 @@ from django.contrib.staticfiles.views import serve
 from django.views.decorators.cache import never_cache
 from django.conf.urls.static import static
 
+admin.site.site_header = "Learn With Me"
+admin.site.site_title = "LWM админ-панель"
+admin.site.index_title = "Добро пожаловать на LWM"
+
 urlpatterns = [
     path('', include('main.urls', namespace='')),
     path('admin/', admin.site.urls),

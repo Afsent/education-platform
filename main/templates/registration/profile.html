@@ -12,7 +12,7 @@
     {% if user.is_teacher %}
         <p><a href="{% url 'profile_lesson_add' %}">Добавить урок</a></p>
     {% endif %}
-    <a href="{% url 'quiz_progress' %}">Результаты</a>
+    <a href="{% url 'quiz_progress' %}">Мои результаты</a>
     {% if lessons %}
         <h3>Ваши уроки</h3>
         <ul class="list-unstyled">

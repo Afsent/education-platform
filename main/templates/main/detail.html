@@ -20,41 +20,58 @@
                 </p>
 
                 {% if ais %}
-                    <h4>Список дополнительных файлов:</h4>
-                    {% for ai in ais %}
-                        <div>
-                            <a class="btn btn-light"
-                               href="{{ ai.file.url }}">
-                                {{ ai.file.name }}</a>
+                    <div class="card">
+                        <h4 class="card-header">Список дополнительных
+                            файлов:</h4>
+                        <div class="card-body">
+                            {% for ai in ais %}
+                                <div>
+                                    <a class="btn btn-light"
+                                       href="{{ ai.file.url }}">
+                                        {{ ai.file.name }}</a>
+                                </div>
+                            {% endfor %}
                         </div>
-                    {% endfor %}
+                    </div>
                 {% endif %}
-                {% for item in quiz %}
-                    <a href="{% url 'quiz_start_page' slug=item.url %}">
-                        Тест</a>
-                {% endfor %}
+                {% if quiz %}
+                    <br>
+                    <div class="card">
+                        <h4 class="card-header">Пройдите тестирование после
+                            изучения урока:</h4>
+                        <div class="card-body">
+                            {% for item in quiz %}
+                                <a class="btn btn-warning" role="button" href=
+                                        "{% url 'quiz_start_page' slug=item.url %}">
+                                    Пройти тест</a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
-    <hr>
+    <br>
     <div class="container-fluid" style="margin-top: 2rem">
-        <div>
+        <hr>
+        <div class="container">
             <h4 class="mt-S">Hoвый комментарий</h4>
             <form method="post">
                 {% csrf_token %}
-                {% bootstrap_form form layout='horizontal' %}
+                {% bootstrap_form form %}
                 {% buttons submit='Добавить' %}{% endbuttons %}
             </form>
         </div>
         <hr>
         {% if comments %}
-            <div class="mt-5">
+            <div class="list-group">
                 {% for comment in comments %}
-                    <div class="my-2 р-2">
-                        <h5>{{ comment.author }}</h5>
-                        <p>{{ comment.content }}</p>
-                        <p class="text-right font-italic">
-                            {{ comment.created_at }}</p>
+                    <div class="list-group-item">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{ comment.author }}</h5>
+                            <small>{{ comment.created_at }}</small>
+                        </div>
+                        <p class="mb-1">{{ comment.content }}</p>
                     </div>
                 {% endfor %}
             </div>

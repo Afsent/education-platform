@@ -1,7 +1,6 @@
 from django.conf.urls import url
-from .views import QuizListView, CategoriesListView, \
-    ViewQuizListByCategory, QuizUserProgressView, QuizMarkingList, \
-    QuizMarkingDetail, QuizDetailView, QuizTake, index
+from .views import QuizListView, CategoriesListView, QuizUserProgressView, \
+    QuizMarkingList, QuizMarkingDetail, QuizDetailView, QuizTake, index
 
 urlpatterns = [url(regex=r'^$', view=index, name='index'),
                url(regex=r'^quizzes/$',
@@ -11,10 +10,6 @@ urlpatterns = [url(regex=r'^$', view=index, name='index'),
                url(regex=r'^category/$',
                    view=CategoriesListView.as_view(),
                    name='quiz_category_list_all'),
-
-               url(regex=r'^category/(?P<category_name>[\w|\W-]+)/$',
-                   view=ViewQuizListByCategory.as_view(),
-                   name='quiz_category_list_matching'),
 
                url(regex=r'^progress/$',
                    view=QuizUserProgressView.as_view(),
