@@ -6,8 +6,7 @@ from django.contrib.auth.models import Group
 from main.forms import SubRubricForm, GroupAdminForm
 from .utilities import send_activation_notification
 from .models import AdvUser, SubRubric, SuperRubric, AdditionalFile, Lesson, \
-    Comment
-from quiz.models import Question, Quiz
+    Comment, GroupStudents
 
 
 def send_activation_notifications(modeladmin, request, queryset):
@@ -116,3 +115,6 @@ class GroupAdmin(admin.ModelAdmin):
 
 # Register the new Group ModelAdmin.
 admin.site.register(Group, GroupAdmin)
+
+
+admin.site.register(GroupStudents)

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import Signal
+
+from education_platform import settings
 from .utilities import send_activation_notification, get_timestamp_path
 
 user_registrated = Signal(providing_args=['instance'])
@@ -27,7 +29,8 @@ class AdvUser(AbstractUser):
         super().delete(*args, **kwargs)
 
     class Meta(AbstractUser.Meta):
-        pass
+        verbose_name = 'Пользователь'
+        verbose_name_plural = 'Пользователи'
 
 
 class Rubric(models.Model):
@@ -149,3 +152,23 @@ class Comment(models.Model):
         verbose_name = 'Комментарий'
         ordering = ['-created_at']
 
+
+class GroupStudents(models.Model):
+    course = models.ForeignKey(
+        SubRubric, null=True, blank=True,
+        verbose_name="Курс", on_delete=models.CASCADE)
+
+    student = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name="Пользователь",
+        on_delete=models.CASCADE)
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.student.email}'
+
+    class Meta:
+        verbose_name = "Группа студентов"
+        verbose_name_plural = "Группы студентов"

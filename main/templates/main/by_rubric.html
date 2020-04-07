@@ -36,21 +36,25 @@
     </div>
     <div style="margin-top: 2rem">
         {% if lessons %}
-            <div class="list-group">
-                {% for lesson in lessons %}
-                    {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
-                    <a href="{{ url }}{{ all }}"
-                       class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h3 class="mb-1">{{ lesson.title }}</h3>
-                            <small>{{ lesson.created_at }}</small>
-                        </div>
-                        <p class="mb-1">{{ lesson.content }}</p>
-                    </a>
-                {% endfor %}
-            </div>
-            <br>
-            {% bootstrap_pagination page url=keyword %}
+            {% for student in students.values %}
+                {% if student.student_id == user.pk %}
+                    <div class="list-group">
+                        {% for lesson in lessons %}
+                            {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}
+                            <a href="{{ url }}{{ all }}"
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h3 class="mb-1">{{ lesson.title }}</h3>
+                                    <small>{{ lesson.created_at }}</small>
+                                </div>
+                                <p class="mb-1">{{ lesson.content }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <br>
+                    {% bootstrap_pagination page url=keyword %}
+                {% endif %}
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock %}

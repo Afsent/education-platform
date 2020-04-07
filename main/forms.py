@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory, RadioSelect
 
 from .models import user_registrated, SubRubric, SuperRubric, Lesson, \
-    AdditionalFile, Comment
+    AdditionalFile, Comment, GroupStudents
 from .models import AdvUser
 from django import forms
 from django.contrib import admin
@@ -13,9 +13,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.contrib.auth.models import Group
 
-
 User = get_user_model()
-
 
 # Create ModelForm based on the Group model.
 class GroupAdminForm(forms.ModelForm):
@@ -25,10 +23,10 @@ class GroupAdminForm(forms.ModelForm):
 
     # Add the users field.
     users = forms.ModelMultipleChoiceField(
-         queryset=User.objects.all(),
-         required=False,
-         # Use the pretty 'filter_horizontal widget'.
-         widget=FilteredSelectMultiple('users', False)
+        queryset=User.objects.all(),
+        required=False,
+        # Use the pretty 'filter_horizontal widget'.
+        widget=FilteredSelectMultiple('users', False)
     )
 
     def __init__(self, *args, **kwargs):

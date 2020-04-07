@@ -4,7 +4,7 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from quiz.models import Quiz
-from .models import AdvUser, SubRubric, Lesson, Comment
+from .models import AdvUser, SubRubric, Lesson, Comment, GroupStudents
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -115,8 +115,9 @@ def by_rubric(request, pk):
     else:
         page_num = 1
     page = paginator.get_page(page_num)
+    students = GroupStudents.objects.filter(course=rubric.pk)
     context = {'rubric': rubric, 'page': page, 'lessons': page.object_list,
-               'form': form}
+               'form': form, 'students': students.values('student')}
     return render(request, 'main/by_rubric.html', context)
 
 
