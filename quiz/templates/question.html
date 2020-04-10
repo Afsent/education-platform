@@ -72,9 +72,11 @@
 
   </ul>
     {% if progress.0|add:1 == progress.1 %}
-    <input type="submit" value={% trans "Submit" %} class="btn btn-large btn-block btn-warning" >
+    <input type="submit" value="Завершить" class="btn btn-large btn-block
+    btn-warning" >
     {% else %}
-        <input type="submit" value={% trans "Next" %} class="btn btn-large btn-block btn-warning" >
+        <input type="submit" value="Далее" class="btn btn-large btn-block
+        btn-warning" >
     {% endif %}
 </form>
 

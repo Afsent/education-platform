@@ -15,9 +15,9 @@
             <small>{% trans "The previous question" %}:</small>
         </p>
         <p>{{ previous.previous_question }}</p>
-        <p>Your answer was
+        <p>Ваш ответ был
             <strong>
-                {{ previous.previous_outcome|yesno:"correct,incorrect" }}
+                {{ previous.previous_outcome|yesno:"верным,неверным" }}
             </strong>
         </p>
         {% include 'question.html' %}

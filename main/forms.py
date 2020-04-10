@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory, RadioSelect
 
 from .models import user_registrated, SubRubric, SuperRubric, Lesson, \
-    AdditionalFile, Comment, GroupStudents
+    AdditionalFile, Comment
 from .models import AdvUser
 from django import forms
 from django.contrib import admin
