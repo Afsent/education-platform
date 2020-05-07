@@ -172,3 +172,54 @@ class GroupStudents(models.Model):
     class Meta:
         verbose_name = "Группа студентов"
         verbose_name_plural = "Группы студентов"
+
+
+class CourseProject(models.Model):
+    rubric = models.ForeignKey(SubRubric, on_delete=models.PROTECT,
+                               verbose_name='Рубрика')
+    title = models.CharField(max_length=40, verbose_name='Название')
+    content = models.TextField(verbose_name='Oпиcaниe')
+    file = models.FileField(upload_to=get_timestamp_path,
+                            verbose_name='Файл',
+                            default=None)
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.title}'
+
+    class Meta:
+        verbose_name = "Курсовой проект"
+        verbose_name_plural = "Курсовые проекты"
+
+
+class Crew(models.Model):
+    course = models.ForeignKey(CourseProject, on_delete=models.PROTECT,
+                               verbose_name='Курсовой проект7')
+    student1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='student1',
+        verbose_name="Пользователь 1",
+        on_delete=models.CASCADE, )
+    student2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,related_name='student2',
+        verbose_name="Пользователь 2",
+        on_delete=models.CASCADE, null=True)
+    student3 = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='student3',
+        verbose_name="Пользователь 3",
+        on_delete=models.CASCADE, null=True)
+    student4 = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='student4',
+        verbose_name="Пользователь 4",
+        on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        """
+        String for representing the Model object.
+        """
+        return f'{self.course} - {self.course_id}'
+
+    class Meta:
+        verbose_name = "Команда"
+        verbose_name_plural = "Команды"

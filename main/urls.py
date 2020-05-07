@@ -2,12 +2,13 @@ from django.urls import path
 from .views import profile, LWMLoginView, LWMLogoutView, ChangeUserInfoView, \
     LWMPasswordChangeView, RegisterDoneView, RegisterUserView, user_activate, \
     main, DeleteUserView, by_rubric, detail, profile_lesson_detail, \
-    profile_lesson_add, profile_lesson_change, profile_lesson_delete
+    profile_lesson_add, profile_lesson_change, profile_lesson_delete, project
 
 urlpatterns = [
     path('<int:rubric_pk>/<int:pk>/', detail, name='detail'),
     path('<int:pk>/', by_rubric, name='by_rubric'),
     path('', main, name='main'),
+    path('projects/<int:pk>/', project, name='project'),
 ]
 
 # Add Django site authentication urls (for login, logout, password management)

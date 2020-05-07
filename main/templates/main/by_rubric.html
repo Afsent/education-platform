@@ -38,6 +38,18 @@
         {% if lessons %}
             {% for student in students.values %}
                 {% if student.student_id == user.pk %}
+                    <div>
+                        {% for project in projects %}
+                            {% url 'project' pk=project.pk as url %}
+                            <a href="{{ url }}{{ all }}"
+                               class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h3 class="mb-1">{{ project.title }}</h3>
+                                </div>
+                                <p class="mb-1">{{ project.content }}</p>
+                            </a>
+                        {% endfor %}
+                    </div>
                     <div class="list-group">
                         {% for lesson in lessons %}
                             {% url 'detail' rubric_pk=rubric.pk pk=lesson.pk as url %}

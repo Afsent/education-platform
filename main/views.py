@@ -4,7 +4,8 @@ from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 
 from quiz.models import Quiz
-from .models import AdvUser, SubRubric, Lesson, Comment, GroupStudents
+from .models import AdvUser, SubRubric, Lesson, Comment, GroupStudents, \
+    CourseProject, Crew
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -116,8 +117,10 @@ def by_rubric(request, pk):
         page_num = 1
     page = paginator.get_page(page_num)
     students = GroupStudents.objects.filter(course=rubric.pk)
+    projects = CourseProject.objects.filter(rubric_id=pk)
     context = {'rubric': rubric, 'page': page, 'lessons': page.object_list,
-               'form': form, 'students': students.values('student')}
+               'form': form, 'students': students.values('student'),
+               'projects': projects}
     return render(request, 'main/by_rubric.html', context)
 
 
@@ -128,7 +131,7 @@ def detail(request, rubric_pk, pk):
     comments = Comment.objects.filter(lesson=pk, is_active=True)
     quiz = Quiz.objects.filter(lesson=lesson)
     next_lesson = Lesson.objects.filter(rubric_id=rubric_pk,
-                                        order=lesson.order+1)
+                                        order=lesson.order + 1)
     initial = {'lesson': lesson.pk}
     context = {'lesson': lesson, 'ais': ais, 'comments': comments,
                'quiz': quiz, 'next_lesson': next_lesson.first()}
@@ -151,6 +154,14 @@ def detail(request, rubric_pk, pk):
         context['form'] = None
 
     return render(request, 'main/detail.html', context)
+
+
+@login_required
+def project(request, pk):
+    project = CourseProject.objects.get(rubric__courseproject=pk)
+    crews = Crew.objects.filter(course=pk)
+    context = {'project': project, 'crews': crews}
+    return render(request, 'main/project.html', context)
 
 
 @login_required
